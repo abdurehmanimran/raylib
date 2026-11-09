@@ -3,6 +3,7 @@
 
 int main() {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+  SetConfigFlags(FLAG_MSAA_4X_HINT);
   InitWindow(800, 1000, "Grid");
 
   SetTargetFPS(60);
@@ -16,6 +17,7 @@ int main() {
     float height = GetScreenHeight();
     float width  = GetScreenWidth();
 
+    // Arrow Key Movements
     if (IsKeyDown(KEY_RIGHT)) {
       x_offset += 5;
     }
@@ -24,31 +26,25 @@ int main() {
     }
 
     if (IsKeyDown(KEY_UP)) {
-      y_offset += 5;
-    }
-    if (IsKeyDown(KEY_DOWN)) {
       y_offset -= 5;
     }
+    if (IsKeyDown(KEY_DOWN)) {
+      y_offset += 5;
+    }
 
+    // Touchpad Movements
     if (GetMouseWheelMoveV().x > 0) {
       x_offset = Lerp(x_offset, x_offset - 50.0, GetFrameTime() * 10.0);
-      // x_offset -= 5.0;
     }
     if (GetMouseWheelMoveV().x < 0)
       x_offset = Lerp(x_offset, x_offset + 50.0, GetFrameTime() * 10.0);
-    // x_offset += 5.0;
 
     if (GetMouseWheelMoveV().y > 0) {
       y_offset = Lerp(y_offset, y_offset - 50.0, GetFrameTime() * 10.0);
-      // y_offset -= 5.0;
     }
     if (GetMouseWheelMoveV().y < 0) {
       y_offset = Lerp(y_offset, y_offset + 50.0, GetFrameTime() * 10.0);
-      // y_offset += 5.0;
     }
-
-    // x_offset -= GetMouseWheelMoveV().x * 20.0;
-    // y_offset -= GetMouseWheelMoveV().y * 20.0;
 
     for (int x = 0; x <= width; x++) {
       if ((int)(x + x_offset - width / 2) % 100 == 0) {
